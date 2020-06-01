@@ -1,0 +1,104 @@
+<html>
+    <head>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <style>
+            
+      textarea {
+        display: inline-block;
+        margin: auto;
+      }
+      input {
+        width: 100%;
+        height: 50px;
+        background: #131419;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        padding: 5px 15px;
+        font-size: 18px;
+        color: #ff6037;
+        box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+          inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+      }
+      input[type="submit"] {
+        text-align: center;
+        margin-top: 20px;
+        box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
+          2px 2px 6px rgba(0, 0, 0, 0.8);
+      }
+      .answerform1 {
+        align-items: center;
+        margin: 10%;
+        margin: auto;
+        position: relative;
+        width: 90%;
+        background:orange;
+        padding: 40px 40px 60px;
+        box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+          5px 5px 15px rgba(0, 0, 0, 0.8);
+      }
+      ul li{
+          font-size: larger;
+          font-weight: bold;
+      }
+    </style>
+    </head>
+
+        <body>
+            <div style="display:flex;justify-content:space-between;height:100px; background-color: rgb(17, 93, 207);
+            box-shadow: 5px 5px black; ">
+            <% if(user.id == profile_user.id) {%>
+              <h1>Welcome back <%= user.username %></h1>
+              <a href="/" style="color:white;
+              padding: 14px 25px;
+              font-size: larger;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;"> Home Page</a>
+                 
+          </div>
+        
+              <h3>These are the list of questions you have asked</h3>
+              <div class="answerform1">
+                  <ul>
+                      <% for(ques of question){%>
+                      <li id="question-<%= ques._id %>-profile"><%= ques.question %> 
+                        <br>
+                      <small>
+                         Likes <%= ques.likes.length %>
+                      </small></li>
+                      <%}%>
+                  </ul>
+              </div>
+            
+            <%} else {%>
+              <div style="display: inline-block; width: 70%;">
+              <h1> This is the profile page of <%=profile_user.username %></h1>
+
+                <a href="/" style="text-decoration: none;font-size: x-large; color: white; display: inline-block;"> Home Page
+                </a>
+                   <div class="answerform1">
+                     <ul>
+                       <% for(quest of profile_user.question){%> 
+                          <li><%= quest.question %>
+                          <br>
+                          <small>
+                           Likes <%=quest.likes.length%>
+                          </small>
+                        </li>
+                        <%}%>
+                     </ul>
+                   </div>
+              </div>
+              <div>
+                <a href="/users/follow_user/<%= profile_user._id %>" style="display:block;text-decoration: none;font-size: x-large;color: white;">Follow</a>
+              </div>
+              
+               
+              <%}%>
+               
+                </ul>
+                
+        </body>
+</html>
+

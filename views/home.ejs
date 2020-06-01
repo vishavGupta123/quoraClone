@@ -1,0 +1,297 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
+    <style>
+      #quora-home-page{
+        position:relative;
+        display:flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      #question-list-container{
+        display:block;
+        width:50%;
+        margin:auto;
+      }
+
+      #questionform1 {
+        align-items: center;
+        margin: 10%;
+        margin-left: 38%;
+        width: 350px;
+        height:300px;
+        background: olive;
+        padding: 40px 40px 60px;
+        box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05),
+          5px 5px 15px rgba(0, 0, 0, 0.8);
+      }
+
+     
+      #friendslist{
+        margin-top:10px;
+        height:600px;
+        background-color: aquamarine;
+        box-shadow:10px 10px 30px grey;
+        border-radius:10px;
+      }
+      #user-interest{
+        margin-top:10px;
+        margin-left:20px;
+        background-color: aliceblue;
+        box-shadow: 10px 10px 30px grey;
+        border-radius: 10px;
+      }
+      #floatcontainer1{
+        position:absolute;
+        left:0;
+        top:10px;
+        margin-right:250px;
+        z-index:2;
+      }
+      #userslist{
+        position:fixed;
+        float: left;
+        height:600px;
+        margin-top:10px;
+        background-color: aquamarine;
+        box-shadow:10px 10px 30px grey;
+        border-radius:10px;
+      }
+      textarea {
+        display: inline-block;
+        margin: auto;
+      }
+      input {
+        width: 100%;
+        height: 50px;
+        background: #131419;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        padding: 5px 15px;
+        font-size: 18px;
+        color: #ff6037;
+        box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1),
+          inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+      }
+      input[type="submit"] {
+        text-align: center;
+        margin-top: 20px;
+        box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1),
+          2px 2px 6px rgba(0, 0, 0, 0.8);
+      }
+      ul li{
+          font-size: larger;
+          font-weight: bold;
+      }
+      .question-answer-list{
+        font-size: medium;
+        font-weight: bold;
+        background-color: #ff6037;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        width: 100%;
+        height: 100px;
+        background-color: rgb(17, 93, 207);
+        box-shadow: 5px 5px black;
+        display: flex;
+        justify-content: space-between;
+      "
+    >
+      <h1 style="color: white; width: 200px; height: 75%;">Quora Clone</h1>
+      <div>
+          <% if(locals.user) {%> 
+                <a href="/users/profile/<%=user._id%>"
+                style="
+                color: white;
+                padding: 14px 25px;
+                font-size: larger;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+
+              "><%= user.username %></a>
+                <a href="/users/sign-out"
+                style="
+                color: white;
+                padding: 14px 25px;
+                font-size: larger;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+              ">sign-out</a>
+            
+            <%}else{%> 
+                <a
+                href="users/sign-in"
+                style="
+                  color: white;
+                  padding: 14px 25px;
+                  font-size: larger;
+                  text-align: center;
+                  text-decoration: none;
+                  display: inline-block;
+                "
+                >Sign In</a
+              >
+              <a
+              href="users/sign-up"
+              style="
+                color: white;
+                padding: 14px 25px;
+                font-size: larger;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+              "
+              >Sign Up</a
+                <%}%>
+      
+      
+        >
+      </div>
+    </div>
+    <% if(!user){%> 
+    <h1
+      style="
+        width: 600px;
+        height: auto;
+        background-color: coral;
+        margin: auto;
+        margin-top: 50px;
+        color: lightgreen;
+      "
+    >
+
+      Welcome to the quora clone website if you are not a member click on the
+      sign up link on the top right corner to become a quora member...
+    </h1>
+    <% } %>
+
+    
+   
+   <div id="quora-home-page">
+     <% if(locals.user){%> 
+      <form action="/question/create" method="POST" id="questionform1">
+        <textarea
+          name="question"
+          cols="30"
+          rows="10"
+          placeholder="Ask a question..."
+          required
+        ></textarea>
+        <input type="submit" value="Post Question" />
+      </form>
+      <%}%>
+    <div id="question-list-container">
+      <ul>
+      <% for(let i =0;i<question.length;i++){%> 
+        
+        
+            <li id="question-<%= question[i]._id %>"><%= question[i].question %> asked by <%= question[i].user.username %>
+              <% if(locals.user){%> 
+                <a class="toggle-like-button" data-likes="<%= question[i].likes.length%> "  href="/like/toggle/?id=<%= question[i]._id %>&type=Question" style="display:block;text-decoration:double">
+                  <%= question[i].likes.length %> Likes
+                </a>
+             <%}else {%>
+              <%= question[i].likes.length %> Likes
+              <%}%>
+              <%if(!user){%>
+              <a href="/users/sign-up" style="display:block;text-decoration:none">Type Answer</a>
+              <%}%>
+            <% if(locals.user) {%> 
+            <form action="/answer/create" method="POST" id="answerform-<%= question[i]._id%>">
+                <textarea name="content" cols="70" rows="10" placeholder="type your answer here..." required></textarea>
+                <input type="hidden" name="question" value="<%= question[i].id %>">
+                <input type="submit" value="Ans" style="width: 10%; display:block"> 
+            </form>
+          <%}%>
+          <div class="question-answer-list">
+            <ul id="question-answers-<%=question[i]._id %>">
+              <% for(answer of question[i].answers){%>  
+                <li id="answer-<%=answer._id%>" style="box-shadow: 2px 2px 3px black; margin:10px;font-style: italic;">
+                  <p> 
+                    <%= answer.content %>
+                    <br>
+                    <small>
+                      <%= answer.user.username %>
+                    </small>
+                  </p>
+                  <% if(locals.user) {%>
+                    <a class="toggle-like-button" data-likes="<%= answer.likes.length %>" href="/like/toggle/?id=<%=answer._id%>&type=Answer" style="display:block;text-decoration:double">
+                      <%= answer.likes.length %> Likes
+                    </a>
+                    <%} else {%>
+                      <%= answer.likes.length %> Likes
+                      <%}%>
+                       </li>
+                 
+                <%}%>
+
+            </ul>
+          </div>
+        </li>
+        
+        <%}%>
+      </ul>
+    </div>
+    <div id="floatcontainer1">
+      <div id="userslist">
+        <h1 style="text-align: center;">Users</h1>
+        <% for(let use of users){%> 
+          <a href="/users/profile/<%= use._id %>" style="display:block;text-decoration:none;font-size: x-large;font-style:oblique"><%= use.username %></a>
+          <%}%>
+      </div>
+    </div>
+   
+        <div id="floatcontainer2">
+          <div id="friendslist">
+            <h1>Friend List</h1>
+           <h3>Chris Evans</h3>
+           <h3>Robert downey</h3>
+           <h3>Scarlett johannsen</h3>
+          </div>
+        </div>
+        
+   </div>
+   
+    <script src='/js/home_posts_answers.js'></script>
+
+    <script src="/js/home_posts.js"></script>
+    <script src="/js/toggle_likes.js"></script>
+   <script>
+     $('.toggle-like-button').each(function(){
+       let self = this;
+       let toggleLike = new ToggleLike(self);
+     })
+   </script>
+   <script>
+     <% if(flash.success && flash.success.length>0){%> 
+        new Noty({
+          theme:'relax',
+          text:"<%=flash.success%>",
+          type:'success',
+          layout:'topRight',
+          timeout:'2000'
+        }).show()
+      
+      <%}%>
+      <% if(flash.error && flash.error.length>0){%> 
+        new Noty({
+          theme:'relax',
+          text:"<%=flash.error%>",
+          type:'error',
+          layout:'topRight',
+          timeout:'2000'
+        }).show()
+      
+      <%}%>
+   </script>
+  </body>
+</html>
