@@ -1,6 +1,12 @@
 <html>
   <head>
+    
+    <script
+    src="https://kit.fontawesome.com/7975fe4cda.js"
+    crossorigin="anonymous"
+  ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css">
     <style>
@@ -51,7 +57,7 @@
         z-index:2;
       }
       #userslist{
-        position:fixed;
+        position:absolute;
         float: left;
         height:600px;
         margin-top:10px;
@@ -91,7 +97,91 @@
         font-weight: bold;
         background-color: #ff6037;
       }
+      .floatcontainer{
+        position:absolute;
+        left:200px;
+        top:10px;
+
+      }
+      #friends-list{
+        position:absolute;
+        float: right;
+        height:600px;
+        margin-top:10px;
+        background-color: aquamarine;
+        box-shadow:10px 10px 30px grey;
+        border-radius:10px;
+      }
+      #user-chat-box {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      border: 1px dashed grey;
+      height: 350px;
+      width: 300px;
+      background: white;
+      padding: 5px;
+      box-shadow: 1px 1px 1px 1px lightgrey;
+    }
+    
+    #chat-message-list {
+      list-style: none;
+      padding: 10px;
+      height: 70%;
+      background-color: white;
+      overflow-y: auto;
+    }
+    
+    .other-message {
+      text-align: left;
+      padding: 5px;
+    }
+    .other-message > span {
+      display: inline-block;
+      padding: 15px;
+      background-color: #ffa0a0;
+    }
+    
+    .self-message {
+      text-align: right;
+      padding: 5px;
+    }
+    .self-message > span {
+      display: inline-block;
+      padding: 15px;
+      background-color: #a0dcff;
+    }
+    
+    #chat-message-input-container {
+      height: 24%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+    }
+    #chat-message-input {
+      height: 50%;
+      width: 70%;
+    }
+    #send-message {
+      height: 50%;
+      width: 30%;
+      font-size: 25px;
+      color: white;
+      border: none;
+      background: #58d258;
+    }
+    .navigation-link{
+      text-decoration: none;
+      font-size:x-large;
+      text-align: center;
+      background-color:#9ac426;
+      border-radius:20px;
+      border:1px solid rgb(63, 73, 18);
+      margin:5px;
+      padding:10px;
+    }
     </style>
+   
   </head>
   <body>
     <div
@@ -107,6 +197,7 @@
       <h1 style="color: white; width: 200px; height: 75%;">Quora Clone</h1>
       <div>
           <% if(locals.user) {%> 
+            <img src="<%= user.avatar %>" alt="img" style="height:60px; width:60px;border-radius:50%">
                 <a href="/users/profile/<%=user._id%>"
                 style="
                 color: white;
@@ -178,7 +269,8 @@
    
    <div id="quora-home-page">
      <% if(locals.user){%> 
-      <form action="/question/create" method="POST" id="questionform1">
+      <div >
+      <form action="/question/create" method="POST" id="questionform1" >
         <textarea
           name="question"
           cols="30"
@@ -188,6 +280,7 @@
         ></textarea>
         <input type="submit" value="Post Question" />
       </form>
+    </div>
       <%}%>
     <div id="question-list-container">
       <ul>
@@ -197,10 +290,10 @@
             <li id="question-<%= question[i]._id %>"><%= question[i].question %> asked by <%= question[i].user.username %>
               <% if(locals.user){%> 
                 <a class="toggle-like-button" data-likes="<%= question[i].likes.length%> "  href="/like/toggle/?id=<%= question[i]._id %>&type=Question" style="display:block;text-decoration:double">
-                  <%= question[i].likes.length %> Likes
+                  <%= question[i].likes.length %> <i class="far fa-thumbs-up icons"></i>
                 </a>
              <%}else {%>
-              <%= question[i].likes.length %> Likes
+              <%= question[i].likes.length %> <i class="far fa-thumbs-up"></i>
               <%}%>
               <%if(!user){%>
               <a href="/users/sign-up" style="display:block;text-decoration:none">Type Answer</a>
@@ -225,10 +318,10 @@
                   </p>
                   <% if(locals.user) {%>
                     <a class="toggle-like-button" data-likes="<%= answer.likes.length %>" href="/like/toggle/?id=<%=answer._id%>&type=Answer" style="display:block;text-decoration:double">
-                      <%= answer.likes.length %> Likes
+                      <%= answer.likes.length %> <i class="far fa-thumbs-up"></i>
                     </a>
                     <%} else {%>
-                      <%= answer.likes.length %> Likes
+                      <%= answer.likes.length %> <i class="far fa-thumbs-up"></i>
                       <%}%>
                        </li>
                  
@@ -241,6 +334,19 @@
         <%}%>
       </ul>
     </div>
+    <% if(locals.user){%> 
+      <div class='floatcontainer'>
+        <div id="friends-list">
+          <h1 style="text-align: center;">Following</h1>
+          <% for(friend of profile_user.friends){%> 
+            <h1><%= friend.toId.username %></h1>
+          <%}%>
+        </div>
+        
+      </div>
+     
+      
+      <%}%>
     <div id="floatcontainer1">
       <div id="userslist">
         <h1 style="text-align: center;">Users</h1>
@@ -249,18 +355,19 @@
           <%}%>
       </div>
     </div>
-   
-        <div id="floatcontainer2">
-          <div id="friendslist">
-            <h1>Friend List</h1>
-           <h3>Chris Evans</h3>
-           <h3>Robert downey</h3>
-           <h3>Scarlett johannsen</h3>
-          </div>
-        </div>
-        
    </div>
-   
+   <div style="text-align:center">
+     <% if(page_num === 1){%> 
+        <a href="/?page_num=<%=page_num + 1 %>" class="navigation-link">Next</a>
+      <%}else if(page_num > 1 && pageLimit ==10){%>
+        <a href="/?page_num=<%=page_num - 1 %>" class="navigation-link">Previous</a>
+        <a href="/?page_num=<%=page_num + 1%>" class="navigation-link">Next</a>
+      <%}else if(pageLimit<10){%>
+        <a href="/?page_num=<%=page_num-1%>" class="navigation-link">Previous</a>
+      <%}%>
+   </div>
+   <%- include('_chat_box') -%>
+    
     <script src='/js/home_posts_answers.js'></script>
 
     <script src="/js/home_posts.js"></script>
@@ -271,6 +378,14 @@
        let toggleLike = new ToggleLike(self);
      })
    </script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+   <script src="/js/chat_engine.js"></script>
+   <% if(locals.user){%>
+    <script>
+      new ChatEngine('user-chat-box','<%= locals.user.username %>')
+    </script>
+     <%}%>
+  
    <script>
      <% if(flash.success && flash.success.length>0){%> 
         new Noty({

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const friendshipsSchema = new mongoose.Schema({
+const friendshipSchema = new mongoose.Schema({
   fromId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -15,5 +15,5 @@ const friendshipsSchema = new mongoose.Schema({
   },
 });
 
-const Friends = mongoose.model("Friends", friendshipsSchema);
-module.exports = Friends;
+const Friend = mongoose.model("Friend", friendshipSchema);
+module.exports = Friend;

@@ -22,6 +22,9 @@ const questionSchema = new mongoose.Schema(
         ref: "Like",
       },
     ],
+    avatar: {
+      type: String,
+    },
   },
   {
     timestamps: true,

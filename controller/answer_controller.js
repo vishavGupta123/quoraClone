@@ -1,6 +1,7 @@
 const Question = require("../models/question");
 const Answer = require("../models/answer");
 const User = require("../models/user");
+const answerMailer = require("../mailers/answer_mailer");
 module.exports.addAnswer = async function (req, res) {
   console.log(req.user);
   let question = await Question.findById(req.body.question);
@@ -19,6 +20,9 @@ module.exports.addAnswer = async function (req, res) {
 
     await question.answers.push(answer.id);
     await question.save();
+    answer = await answer.populate("user").execPopulate();
+    console.log(answer + "****");
+    answerMailer.newAnswer(answer);
     if (req.xhr) {
       return res.status(200).json({
         data: {

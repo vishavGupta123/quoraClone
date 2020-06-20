@@ -74,11 +74,34 @@
       Enter the username and password to use the website
     </h1>
     <form action="/users/create-session" method="POST" id="form">
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="type your email" required />
       <label for="username">Username</label>
-      <input type="text" name="username" placeholder="enter username" />
+      <input
+        type="text"
+        name="username"
+        placeholder="enter username"
+        required
+      />
       <label for="password">Password</label>
-      <input type="password" name="password" placeholder="enter password" />
+      <input
+        type="password"
+        name="password"
+        placeholder="enter password"
+        required
+      />
       <input type="submit" value="Sign In" />
+      <a
+        href="/users/forget-password-form"
+        style="
+          text-decoration: none;
+          font-size: larger;
+          color: #006c9c;
+          margin-top: 5px;
+        "
+        >Forget-Password?</a
+      >
     </form>
+    <p><a href="/users/auth/google">Google Sign In/Sign Up</a></p>
   </body>
 </html>

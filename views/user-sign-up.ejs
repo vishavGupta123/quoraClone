@@ -76,6 +76,8 @@
       Welcome to quora sign up page please enter your credentials
     </h1>
     <form action="/users/create" method="POST" id="form">
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="type your email" required />
       <label for="username">Username</label>
       <input
         type="text"
@@ -98,5 +100,6 @@
         >sign-in</a
       >
     </form>
+    <p><a href="/users/auth/google">Google Sign In/Sign Up</a></p>
   </body>
 </html>

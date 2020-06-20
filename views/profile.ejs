@@ -48,7 +48,10 @@
             <div style="display:flex;justify-content:space-between;height:100px; background-color: rgb(17, 93, 207);
             box-shadow: 5px 5px black; ">
             <% if(user.id == profile_user.id) {%>
-              <h1>Welcome back <%= user.username %></h1>
+              <h1>Welcome back <%= user.username %>
+                <a href="/users/add-image/<%=user.id%>"><img style="width:60px;height:60px;border-radius:50%" src="<%=user.avatar%>" alt="img"></a>
+              </h1>
+              
               <a href="/" style="color:white;
               padding: 14px 25px;
               font-size: larger;
@@ -73,7 +76,8 @@
             
             <%} else {%>
               <div style="display: inline-block; width: 70%;">
-              <h1> This is the profile page of <%=profile_user.username %></h1>
+              <h1> This is the profile page of <%=profile_user.username %>
+              <img src="<%=profile_user.avatar%>" alt="img" style="width:60px;height:60px;border-radius:50%"></h1>
 
                 <a href="/" style="text-decoration: none;font-size: x-large; color: white; display: inline-block;"> Home Page
                 </a>
@@ -91,7 +95,14 @@
                    </div>
               </div>
               <div>
-                <a href="/users/follow_user/<%= profile_user._id %>" style="display:block;text-decoration: none;font-size: x-large;color: white;">Follow</a>
+                <a href="/users/follow_user/<%= profile_user._id %>" style="display:block;text-decoration: none;font-size: x-large;color: white;">
+                  <% if(friends!=undefined && friends.areFriends){%> 
+                    Following
+                    
+                    <%}else {%>
+                      Follow
+                    <%}%>
+                </a>
               </div>
               
                

@@ -35,7 +35,7 @@
     return $(`<li id="question-${question._id}">${question.question} asked by ${question.user.username} 
 
       <a class="toggle-like-button" data-likes="0 "  href="/like/toggle/?id=${question._id}&type=Question" style="display:block;text-decoration:double">
-        0 Likes
+        0 <i class="far fa-thumbs-up"></i>
       </a>
  
   <form action="/answer/create" method="POST" id="answerform-${question._id}">

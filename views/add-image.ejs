@@ -1,0 +1,13 @@
+<html>
+  <head> </head>
+  <body>
+    <form
+      action="/users/add-image/<%= user %>"
+      enctype="multipart/form-data"
+      method="POST"
+    >
+      <input type="file" name="avatar" placeholder="profile image" />
+      <input type="submit" value="Add image" />
+    </form>
+  </body>
+</html>

@@ -47,7 +47,7 @@ class QuestionAnswers {
       </small>
     </p>
     <a class="toggle-like-button" data-likes="0" href="/like/toggle/?id=${data.data.answer._id}&type=Answer" style="display:block;text-decoration:double">
-    0 Likes
+    0 <i class="far fa-thumbs-up"></i>
   </a>
          </li>`);
   };
