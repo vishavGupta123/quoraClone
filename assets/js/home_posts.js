@@ -3,6 +3,8 @@
   console.log("Hello everyone");
   let createPost = function () {
     let newPostForm = $("#questionform1");
+    let textarea = $("#questionform1>textarea");
+    console.log("This is the textarea", textarea);
 
     newPostForm.submit(function (e) {
       e.preventDefault();
@@ -15,10 +17,7 @@
           let newQuestion = newQuestionDom(data.data.question);
           $("#question-list-container > ul").prepend(newQuestion);
           console.log($("#questionform1 > textarea"));
-          $("#questionform1 > textarea").attr(
-            "placeholder",
-            "Ask a question..."
-          );
+          textarea.val("Ask a question ...");
           console.log("HELLO");
           new QuestionAnswers(data.data.question._id);
           console.log("World");

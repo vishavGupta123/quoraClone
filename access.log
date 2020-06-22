@@ -1,0 +1,5 @@
+[0mGET /?page_num=1 [32m200[0m 632.374 ms - 15044[0m
+[0mGET /favicon.ico [33m404[0m 4.678 ms - 150[0m
+[0mGET /users/sign-in [36m304[0m 14.972 ms - -[0m
+[0mPOST /users/create-session [36m302[0m 47.687 ms - 68[0m
+[0mGET /?page_num=1 [32m200[0m 146.946 ms - 22084[0m

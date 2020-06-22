@@ -1,6 +1,9 @@
 const express = require("express");
 const env = require("./config/environment");
+const logger = require("morgan");
+
 const app = express();
+require("./config/view-helpers")(app);
 const port = 8000;
 const bodyParser = require("body-parser");
 const db = require("./config/mongoose");
@@ -21,6 +24,9 @@ app.use(bodyParser.urlencoded());
 app.set("view engine", "ejs");
 app.use(express.static(env.asset_path));
 app.use("/uploads", express.static(__dirname + "/uploads"));
+
+app.use(logger(env.morgan.mode, env.morgan.options));
+
 app.set("views", "./views");
 app.use(
   session({
@@ -39,8 +45,6 @@ app.use(passport.setAuthenticatedUser);
 app.use(flash());
 app.use(customMWare.setFlash);
 app.use("/", require("./routes"));
-
-console.log(process.env.QUORA_ASSET_PATH, "QUORA_ASSET_PATH");
 
 app.listen(port, function () {
   console.log("The server is running succesfully");

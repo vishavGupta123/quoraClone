@@ -3,6 +3,8 @@ class QuestionAnswers {
     this.questionId = questionId;
     this.questionContainer = $(`#question-${questionId}`);
     this.newAnswerForm = $(`#answerform-${questionId}`);
+    this.textarea = $(`#answerform-${questionId}>textarea`);
+    console.log("TEXTAREA ", this.textarea);
 
     this.createAnswer(questionId);
 

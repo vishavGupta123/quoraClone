@@ -275,9 +275,8 @@
           name="question"
           cols="30"
           rows="10"
-          placeholder="Ask a question..."
           required
-        ></textarea>
+        >Ask a question...</textarea>
         <input type="submit" value="Post Question" />
       </form>
     </div>
@@ -300,7 +299,7 @@
               <%}%>
             <% if(locals.user) {%> 
             <form action="/answer/create" method="POST" id="answerform-<%= question[i]._id%>">
-                <textarea name="content" cols="70" rows="10" placeholder="type your answer here..." required></textarea>
+                <textarea name="content" cols="70" rows="10" required>Type your ans here...</textarea>
                 <input type="hidden" name="question" value="<%= question[i].id %>">
                 <input type="submit" value="Ans" style="width: 10%; display:block"> 
             </form>
