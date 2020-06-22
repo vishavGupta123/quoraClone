@@ -13,6 +13,7 @@ const passportGoogle = require("./config/passport-google-oauth2-strategy");
 const session = require("express-session");
 const flash = require("connect-flash");
 const customMWare = require("./config/middleware");
+console.log("APP LOCALS ASSET PATH ");
 
 //setup the chat server to be used with sockets.io
 const chatServer = require("http").Server(app);
@@ -22,12 +23,13 @@ console.log("chat server is listening on port 5000");
 
 app.use(bodyParser.urlencoded());
 app.set("view engine", "ejs");
-app.use(express.static(env.asset_path));
+app.use(express.static("./assets"));
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.use(logger(env.morgan.mode, env.morgan.options));
 
 app.set("views", "./views");
+console.log("SESSION COOKIE KEY", env.session_cookie_key);
 app.use(
   session({
     name: "authentication",

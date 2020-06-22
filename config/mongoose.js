@@ -1,4 +1,5 @@
 const env = require("./environment");
+console.log("DATABASE NAME ", env.db);
 
 const mongoose = require("mongoose");
 mongoose.connect(`mongodb://localhost/${env.db}`);

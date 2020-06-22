@@ -37,6 +37,29 @@ const development = {
 
 const production = {
   name: "production",
+  asset_path: process.env.QUORA_ASSET_PATH,
+  session_cookie_key: process.env.QUORA_SESSION_COOKIE_KEY,
+  db: process.env.QUORA_DB,
+  smtp: {
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false,
+    auth: {
+      user: process.env.QUORA_GMAIL_USERNAME,
+      pass: process.env.QUORA_GMAIL_PASSWORD,
+    },
+  },
+  google_client_iD: process.env.QUORA_GOOGLE_CLIENT_ID,
+  google_client_secret: process.env.QUORA_GOOGLE_CLIENT_SECRET,
+  google_callback_url: process.env.QUORA_GOOGLE_CALLBACK_URL,
+  morgan: {
+    mode: "dev",
+    options: { stream: accessLogStream },
+  },
 };
 
-module.exports = development;
+module.exports =
+  eval(process.env.QUORA_ENVIRONMENT) == undefined
+    ? development
+    : eval(process.env.QUORA_ENVIRONMENT);
